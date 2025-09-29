@@ -1,0 +1,39 @@
+name: tvbox
+description: Demo de app de TV con Flutter y Better Player
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  video_player: ^2.5.1
+  chewie: ^1.5.0
+  cupertino_icons: ^1.0.5
+  json_annotation: ^4.9.0
+  carousel_slider: ^5.1.1
+  flutter_launcher_icons: ^0.13.1
+  smooth_page_indicator: ^1.1.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/Logo_inicio.png"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.0 # compatible con json_annotation 4.x
+  
+flutter:
+  uses-material-design: true
+  assets:
+     - assets/images/
+     - assets/images/Logo_inicio.png
+     - assets/canales.json
+     - assets/images/deportes.jpg
+     - assets/images/noticias.jpg
+     - assets/images/peliculas.jpg

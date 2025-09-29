@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "Big Buck Bunny",
+    "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "programas": ["Intro", "Trailer", "Corto Animado", "Making Of"]
+  },
+  {
+    "nombre": "Sintel Trailer",
+    "url": "https://test-streams.mux.dev/sintel-hls/index.m3u8",
+    "programas": ["Trailer", "Detrás de Escenas", "Corto", "Entrevista"]
+  },
+  {
+    "nombre": "Azteca 7",
+    "url": "https://mdstrm.com/live-stream-playlist/609ad46a7a441137107d7a81.m3u8",
+    "programas": ["Noticias", "Serie", "Película", "Reality"]
+  }
+]

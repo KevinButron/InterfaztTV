@@ -41,7 +41,7 @@ Widget build(BuildContext context) {
     backgroundColor: Colors.white, // fondo blanco
     body: Center(
       child: Image.asset(
-        'assets/images/Logo_inicio.png',
+        'assets/images/InterfazTV.png',
         fit: BoxFit.contain,
         width: MediaQuery.of(context).size.width * 0.7, // 70% del ancho de la pantalla
       ),

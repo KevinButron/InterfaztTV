@@ -9,12 +9,30 @@ class VivoPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("TV en Vivo"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Row(
+          children: [
+            Text(
+              "TV en Vivo",
+              style: TextStyle(
+                fontSize: 20,
+                color: const Color.fromARGB(255, 2, 1, 1),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Spacer(),
+            Image.asset(
+              "assets/images/InterfazTV.png",
+              height: 55,
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Text(
-          'Sección TV en Vivo (puedes agregar aquí los canales o streams)',
+          'Sección TV en Vivo'
+          '(puedes agregar aquí los canales o streams)',
           style: TextStyle(
             color: Colors.white,
             fontSize: isLandscape ? size.width * 0.035 : size.width * 0.05,

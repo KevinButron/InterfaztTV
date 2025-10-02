@@ -1,11 +1,11 @@
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'models/model.dart';
+import 'dart:async';
 import 'player_page.dart';
 
-class  GuiaPage extends StatelessWidget {
+class  GuiaPageholder extends StatelessWidget { //class  GuiaPage extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -14,8 +14,25 @@ class  GuiaPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("TV en Vivo"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Row(
+          children: [
+            Text(
+              "Guía de TV",
+              style: TextStyle(
+                fontSize: 20,
+                color: const Color.fromARGB(255, 2, 1, 1),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Spacer(),
+            Image.asset(
+              "assets/images/InterfazTV.png",
+              height: 55,
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Text(
@@ -30,8 +47,16 @@ class  GuiaPage extends StatelessWidget {
     );
   }
 }
-/*
+
+
+
+
 class GuiaPage extends StatefulWidget {
+  final List<Model> favoritos;
+  final Function(Model) onFavoritoChanged;
+
+  GuiaPage({required this.favoritos, required this.onFavoritoChanged});
+
   @override
   State<GuiaPage> createState() => _GuiaPageState();
 }
@@ -43,6 +68,7 @@ class _GuiaPageState extends State<GuiaPage> {
   DateTime _currentTime = DateTime.now();
   List<String> _timeSlots = [];
   int _currentHourIndex = 0;
+ 
 
   @override
   void initState() {
@@ -167,51 +193,65 @@ class _GuiaPageState extends State<GuiaPage> {
         backgroundColor: Colors.grey[900],
         appBar: AppBar(
           title: Text("Guía de TV", style: TextStyle(fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.deepPurple[800],
+          backgroundColor: Colors.white,
           elevation: 0,
         ),
         body: Center(
-          child: CircularProgressIndicator(color: Colors.deepPurple),
+          child: CircularProgressIndicator(color: Colors.black),
         ),
       );
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: const Color.fromARGB(250, 255, 255, 255),
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        backgroundColor: Colors.white,
+        elevation: 0,
+          title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Guía de TV", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text(
-              "Hora CDMX: ${_currentTime.hour.toString().padLeft(2, '0')}:${_currentTime.minute.toString().padLeft(2, '0')}",
-              style: TextStyle(fontSize: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Guía de TV", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                Text(
+                  "Hora CDMX: ${_currentTime.hour.toString().padLeft(2, '0')}:${_currentTime.minute.toString().padLeft(2, '0')}",
+                  style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 65, 65, 65)),
+                ),
+              ],
+            ),
+            const SizedBox(width: 8), // espacio entre texto y íconos
+            IconButton(
+              icon: Icon(Icons.calendar_today, size: 20, color: Colors.black),
+              onPressed: () {
+                // Acción para cambiar fecha
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.filter_list, size: 20, color: Colors.black),
+              onPressed: () {
+                // Acción para filtrar
+              },
             ),
           ],
         ),
-        backgroundColor: Colors.deepPurple[800],
-        elevation: 0,
         actions: [
-          IconButton(
-            icon: Icon(Icons.calendar_today, size: 20),
-            onPressed: () {
-              // Acción para cambiar fecha
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.filter_list, size: 20),
-            onPressed: () {
-              // Acción para filtrar
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 12), // espacio a la derecha
+            child: Image.asset(
+              "assets/images/InterfazTV.png",
+              height: 55,
+            ),
           ),
         ],
       ),
+
       body: Column(
         children: [
           // Cabecera con franjas horarias
           Container(
             height: 50,
-            color: Colors.deepPurple[900],
+            color: Colors.black,
             child: Row(
               children: [
                 Container(
@@ -220,7 +260,7 @@ class _GuiaPageState extends State<GuiaPage> {
                   child: Text(
                     "CANALES",
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: const Color.fromARGB(240, 255, 255, 255),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -236,13 +276,13 @@ class _GuiaPageState extends State<GuiaPage> {
                         width: 150,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: isCurrentHour ? Colors.deepPurple[700] : Colors.transparent,
-                          border: Border(right: BorderSide(color: Colors.grey[800]!)),
+                          color: isCurrentHour ? const Color.fromARGB(255, 212, 33, 20): Colors.transparent,
+                          border: Border(right: BorderSide(color: Colors.black!)),
                         ),
                         child: Text(
                           _timeSlots[index],
                           style: TextStyle(
-                            color: isCurrentHour ? Colors.white : Colors.white70,
+                            color: isCurrentHour ? Colors.white : const Color.fromARGB(240, 255, 255, 255),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -268,45 +308,78 @@ class _GuiaPageState extends State<GuiaPage> {
                       return Container(
                         height: 80,
                         decoration: BoxDecoration(
-                          color: Colors.grey[850],
-                          border: Border(bottom: BorderSide(color: Colors.grey[800]!)),
+                          color: const Color.fromARGB(235, 255, 255, 255),
+                          border: Border(
+                            bottom: BorderSide(color: const Color.fromARGB(205, 225, 225, 225)!)
+                          ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        child: Stack(
                           children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.deepPurple,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  canal.nombre.substring(0, 1),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            Positioned(
+                              top: 2,
+                              right: 0.5,
+                              child: IconButton(
+                                //padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  //widget.favoritos.contains(canal) ? Icons.star : Icons.star_border,
+                                  widget.favoritos.any((f) => f.nombre == canal.nombre) 
+                                    ? Icons.star 
+                                    : Icons.star_border,
+                                  color: Colors.amber,
+                                  size: 18,
                                 ),
+                                onPressed: () {
+                                  //widget.onFavoritoChanged(canal);
+                                  //setState(() {});
+                                  if (widget.favoritos.any((f) => f.nombre == canal.nombre)) {
+                                    widget.onFavoritoChanged(canal); // quitar
+                                  } else {
+                                    widget.onFavoritoChanged(canal); // agregar
+}
+                                },
                               ),
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              canal.nombre,
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
+
+                            Center(
+                              child:Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 36,
+                                    height: 36,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: const Color.fromARGB(255, 212, 33, 20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        canal.nombre.substring(0, 1),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    canal.nombre,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       );
-                    },
-                  ),
+                  },),
                 ),
                 // Programación
                 Expanded(
@@ -318,7 +391,7 @@ class _GuiaPageState extends State<GuiaPage> {
                       return Container(
                         height: 80,
                         decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: Colors.grey[800]!)),
+                          border: Border(bottom: BorderSide(color: const Color.fromARGB(255, 225, 225, 225)!)),
                         ),
                         child: ListView.builder(
                           controller: _horizontalScrollController,
@@ -346,7 +419,7 @@ class _GuiaPageState extends State<GuiaPage> {
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: _getProgramColor(progIndex),
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(4),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.black26,
@@ -354,7 +427,7 @@ class _GuiaPageState extends State<GuiaPage> {
                                       offset: Offset(1, 1),
                                     ),
                                   ],
-                                  border: isCurrentProgram ? Border.all(color: Colors.white, width: 2) : null,
+                                  border: isCurrentProgram ? Border.all(color: Colors.grey, width: 2) : null,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -395,7 +468,7 @@ class _GuiaPageState extends State<GuiaPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _scrollToCurrentTime,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color.fromARGB(255, 212, 33, 20),
         child: Icon(Icons.access_time, color: Colors.white),
         tooltip: 'Ir a hora actual',
       ),
@@ -404,12 +477,16 @@ class _GuiaPageState extends State<GuiaPage> {
 
   Color _getProgramColor(int index) {
     List<Color> colors = [
-      Colors.deepPurple,
-      Colors.blue[700]!,
-      Colors.teal[700]!,
-      Colors.indigo[700]!,
+      const Color.fromARGB(255, 0, 0, 0),
+      const Color.fromARGB(205, 50, 50, 50),
+      const Color.fromARGB(205, 100, 100, 100),
+      const Color.fromARGB(205, 150, 150, 150),
+      const Color.fromARGB(255, 104, 35, 224),
+      const Color.fromARGB(255, 44, 131, 217)!,
+      const Color.fromARGB(255, 0, 121, 46)!,
+      const Color.fromARGB(255, 31, 51, 185)!,
       Colors.pink[700]!,
     ];
     return colors[index % colors.length];
   }
-} */
+} 

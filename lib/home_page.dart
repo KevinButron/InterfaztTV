@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'guia_page.dart';
 import 'vivo_page.dart';
+import 'favorites_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'models/model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,14 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  // Aquí defines las pantallas para cada item del navbar
-  final List<Widget> _pages = [
-    InicioPage(),
-    VivoPage(),
-    GuiaPage(),
-    Center(child: Text("⭐ Favoritos", style: TextStyle(fontSize: 22))),
-    Center(child: Text("👤 Perfil", style: TextStyle(fontSize: 22))),
-  ];
+  List<Model> favoritos = [];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,13 +24,40 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      InicioPage(),
+      VivoPage(),
+      GuiaPage(
+        favoritos: favoritos,
+        onFavoritoChanged: (canal) {
+          setState(() {
+            if (favoritos.contains(canal)) {
+              favoritos.remove(canal);
+            } else {
+              favoritos.add(canal);
+            }
+          });
+        },
+      ),
+      FavoritesPage(
+        favoritos: favoritos,
+        onFavoritoChanged: (canal) {
+          setState(() {
+            favoritos.remove(canal); // eliminar si se desmarca
+          });
+        },
+      ),
+      Center(child: Text("👤 Perfil", style: TextStyle(fontSize: 22))),
+    ];
+    
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: const Color.fromARGB(255, 212, 33, 20),
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.black, //Colors.grey,
         onTap: _onItemTapped,
         items: [
           BottomNavigationBarItem(
@@ -93,14 +115,15 @@ class _InicioPageState extends State<InicioPage> {
             Text(
               "Inicio",
               style: TextStyle(
+                fontSize: 20,
                 color: const Color.fromARGB(255, 2, 1, 1),
                 fontWeight: FontWeight.bold,
               ),
             ),
             Spacer(),
             Image.asset(
-              "assets/images/Logo_inicio.png",
-              height: 70,
+              "assets/images/InterfazTV.png",
+              height: 55,
             ),
           ],
         ),
@@ -123,8 +146,16 @@ class _InicioPageState extends State<InicioPage> {
                   SizedBox(width: 10),
                   Expanded(
                     child: TextField(
+                      style: TextStyle(
+                        fontSize: 18,       // mismo tamaño que el hint
+                        color: const Color.fromARGB(255, 60, 60, 60), // 👈 mismo color que hintStyle
+                      ),
                       decoration: InputDecoration(
                         hintText: "Buscar contenido",
+                        hintStyle: TextStyle(
+                          fontSize: 18,    
+                          color: const Color.fromARGB(255, 60, 60, 60), 
+                        ),
                         border: InputBorder.none,
                       ),
                     ),
@@ -167,7 +198,7 @@ class _InicioPageState extends State<InicioPage> {
                 effect: ExpandingDotsEffect(
                   dotHeight: 8,
                   dotWidth: 8,
-                  activeDotColor: Colors.deepPurple,
+                  activeDotColor: const Color.fromARGB(255, 212, 33, 20),
                   dotColor: Colors.grey.shade400,
                 ),
               ),
@@ -177,7 +208,11 @@ class _InicioPageState extends State<InicioPage> {
 
             Text(
               "Disfruta de tus programas favoritos",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                fontSize: 16, 
+                fontWeight: FontWeight.w500, 
+                color: const Color.fromARGB(255, 121, 121, 121),
+              ),
             ),
 
             SizedBox(height: 20),
@@ -186,7 +221,7 @@ class _InicioPageState extends State<InicioPage> {
             Text(
               "Categorías",
               style: TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                  fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
             ),
             SizedBox(height: 15),
 

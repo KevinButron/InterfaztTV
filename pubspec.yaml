@@ -37,3 +37,4 @@ flutter:
      - assets/images/deportes.jpg
      - assets/images/noticias.jpg
      - assets/images/peliculas.jpg
+     - assets/usuarios.json

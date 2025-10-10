@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'guia_page.dart';
 import 'vivo_page.dart';
 import 'favorites_page.dart';
+import 'profile_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'models/model.dart';
 
 class HomePage extends StatefulWidget {
+  final String telefonoUsuario;
+  HomePage({super.key, required this.telefonoUsuario});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -47,7 +51,8 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
-      Center(child: Text("👤 Perfil", style: TextStyle(fontSize: 22))),
+      PerfilPage(telefonoUsuario: widget.telefonoUsuario),
+      //Center(child: Text("👤 Perfil", style: TextStyle(fontSize: 22))),
     ];
     
     return Scaffold(

@@ -38,7 +38,11 @@ class _LoginPageState extends State<LoginPage> {
     if (usuario != null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(
+          builder: (context) => HomePage(
+            telefonoUsuario: usuario['telefono'], // 📌 pasamos el teléfono
+          ),
+        ),
       );
     } else {
       // 👇 SnackBar con icono y texto en negrita

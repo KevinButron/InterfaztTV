@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 
 class PlayerPage extends StatefulWidget {
   final String videoUrl;
@@ -13,48 +12,53 @@ class PlayerPage extends StatefulWidget {
 }
 
 class _PlayerPageState extends State<PlayerPage> {
-  late VideoPlayerController _videoPlayerController;
-  ChewieController? _chewieController;
+  late VideoPlayerController _controller;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.network(widget.videoUrl)
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    _initVideo(widget.videoUrl);
+  }
 
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      autoPlay: true,
-      looping: true,
-      allowedScreenSleep: false,
-      aspectRatio: 16 / 9,
-      materialProgressColors: ChewieProgressColors(
-        playedColor: Colors.red,
-        handleColor: Colors.redAccent,
-        bufferedColor: Colors.grey,
-        backgroundColor: Colors.black,
-      ),
-    );
+  @override
+  void didUpdateWidget(covariant PlayerPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.videoUrl != widget.videoUrl) {
+      _controller.pause();
+      _controller.dispose();
+      _initVideo(widget.videoUrl);
+    }
+  }
+
+  void _initVideo(String url) {
+    _controller = VideoPlayerController.network(url)
+      ..initialize().then((_) {
+        setState(() {
+          _initialized = true;
+        });
+        _controller.play();
+        _controller.setLooping(true);
+      });
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
-    _chewieController?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.canalName)),
-      body: Center(
-        child: _videoPlayerController.value.isInitialized
-            ? Chewie(controller: _chewieController!)
-            : CircularProgressIndicator(),
-      ),
-    );
+    return _initialized
+        ? Center(
+            child: AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            ),
+          )
+        : const Center(
+            child: CircularProgressIndicator(color: Colors.red),
+          );
   }
 }
